@@ -1,39 +1,62 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { UIContext } from '../../Unknown/UIContext';
+import CardMedia from '@mui/material/CardMedia';
+import AuthBackground from '../../../assets/auth-screen-img.png';
+import Logo from '../../../assets/logo.svg';
+
+import AuthForm from '../Form';
 
 const SignInScreen: React.FC = () => {
-  const { setAlert } = useContext(UIContext);
-
-  const handleSignIn = React.useCallback(async () => {
-    setAlert({
-      show: true,
-      severity: 'info',
-      message: 'Sign in button was clicked.',
-    });
-  }, [setAlert]);
-
   return (
     <>
-      <Box
-        height="100vh"
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Container fixed maxWidth="sm">
-          <Grid container>
-            <Grid item xs={12}>
-              <Button type="button" onClick={handleSignIn}>
-                Sign in
-              </Button>
+      <Box height="100vh" display="flex">
+        <Box sx={{ height: '100%', width: '50%', minWidth: '50%' }}>
+          <CardMedia
+            component="img"
+            image={AuthBackground}
+            alt="background"
+            sx={{ height: '100%', width: '100%', objectFit: 'fill' }}
+          />
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            width: '50%',
+            minWidth: '50%',
+            marginTop: '100px',
+          }}
+        >
+          <Container
+            fixed
+            maxWidth="xs"
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Grid
+              container
+              sx={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '37px',
+                width: '173px',
+                marginBottom: '90px',
+              }}
+            >
+              <CardMedia
+                component="img"
+                image={Logo}
+                alt="background"
+                sx={{ height: '100%', width: '100%' }}
+              />
             </Grid>
-          </Grid>
-        </Container>
+            <AuthForm />
+          </Container>
+        </Box>
       </Box>
     </>
   );

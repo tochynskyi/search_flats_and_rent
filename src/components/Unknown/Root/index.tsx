@@ -4,7 +4,7 @@ import { useUser } from 'reactfire';
 import AuthenticatedLayout from '../AuthenticatedLayout';
 import GuestLayout from '../GuestLayout';
 import HomeScreen from '../HomeScreen';
-import NotFoundScreen from '../NotFoundScreen';
+// import NotFoundScreen from '../NotFoundScreen';
 import SignInScreen from '../../Auth/SignInScreen';
 
 const Root: React.FC = () => {
@@ -15,6 +15,7 @@ const Root: React.FC = () => {
   } = useUser();
   const [isUserLoaded, setIsUserLoaded] = useState(false);
   const isLogged = !!user;
+
   useEffect(() => {
     firstValuePromise.then(() => setIsUserLoaded(true));
   }, [firstValuePromise, setIsUserLoaded]);
@@ -34,7 +35,7 @@ const Root: React.FC = () => {
         <Switch>
           <Route exact path="/" component={HomeScreen} />
           <Route exact path="/login" component={() => <Redirect to="/" />} />
-          <Route path="*" component={NotFoundScreen} />
+          <Route path="*" component={HomeScreen} />
         </Switch>
       </AuthenticatedLayout>
     );
@@ -44,7 +45,7 @@ const Root: React.FC = () => {
     <GuestLayout>
       <Switch>
         <Route exact path="/login" component={SignInScreen} />
-        <Route path="*" component={NotFoundScreen} />
+        <Route path="*" component={SignInScreen} />
       </Switch>
     </GuestLayout>
   );

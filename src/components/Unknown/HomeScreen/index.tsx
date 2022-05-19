@@ -1,5 +1,6 @@
-import { Box, Typography } from '@mui/material';
 import React from 'react';
+import { Box } from '@mui/material';
+import Header from '../../Header';
 
 const HomeScreen: React.FC = () => {
   return (
@@ -9,7 +10,7 @@ const HomeScreen: React.FC = () => {
       justifyContent="center"
       alignItems="center"
     >
-      <Typography variant="h1">Home page</Typography>
+      <Header />
     </Box>
   );
 };

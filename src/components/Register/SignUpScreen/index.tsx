@@ -1,15 +1,15 @@
 import React from 'react';
-import AuthForm from '../AuthForm';
+import RegisterForm from '../RegisterForm';
 import GuestScreen from '../../GuestScreen';
 
-const SignInScreen: React.FC = () => {
+const SignUpScreen: React.FC = () => {
   return (
     <>
       <GuestScreen>
-        <AuthForm />
+        <RegisterForm />
       </GuestScreen>
     </>
   );
 };
 
-export default SignInScreen;
+export default SignUpScreen;

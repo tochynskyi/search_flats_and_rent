@@ -12,6 +12,7 @@ interface AlertProps {
   show: boolean;
   severity?: AlertColor;
   message?: string;
+  icon?: boolean;
 }
 
 export const UIContextProvider: React.FC = ({ children }) => {
@@ -19,6 +20,7 @@ export const UIContextProvider: React.FC = ({ children }) => {
     show: false,
     severity: 'info',
     message: '',
+    icon: true,
   });
   const handleClose = () =>
     setAlert({
@@ -28,8 +30,18 @@ export const UIContextProvider: React.FC = ({ children }) => {
   return (
     <UIContext.Provider value={{ setAlert }}>
       {children}
-      <Snackbar open={alert.show} autoHideDuration={4000} onClose={handleClose}>
-        <MuiAlert elevation={6} variant="filled" severity={alert.severity}>
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        open={alert.show}
+        autoHideDuration={4000}
+        onClose={handleClose}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          severity={alert.severity}
+          icon={alert.icon}
+        >
           {alert.message}
         </MuiAlert>
       </Snackbar>

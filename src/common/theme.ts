@@ -5,17 +5,22 @@ const defaultTheme = createTheme({
     primary: {
       main: '#F50057',
     },
+    text: {
+      secondary: '#00000080',
+    },
   },
   typography: {
     h1: {
-      textAlign: 'center',
-      fontSize: '40px',
+      fontSize: 40,
       fontWeight: 700,
     },
+    h2: {
+      fontWeight: 600,
+      fontSize: 28,
+    },
     h4: {
-      color: '#fff',
-      fontWeight: 500,
-      fontSize: '20px',
+      fontWeight: 600,
+      fontSize: 20,
     },
     body2: {
       fontSize: 14,
@@ -28,9 +33,8 @@ const defaultTheme = createTheme({
         {
           props: { variant: 'contained', color: 'primary' },
           style: {
-            maxWidth: '375px',
-            height: '42px',
-            color: '#fff',
+            maxWidth: 375,
+            height: 42,
           },
         },
         {

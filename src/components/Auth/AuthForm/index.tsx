@@ -24,6 +24,7 @@ const useStyles = makeStyles({
     rowGap: 50,
   },
   title: {
+    textAlign: 'center',
     marginBottom: 90,
   },
   input: {

@@ -1,14 +1,12 @@
 import React from 'react';
 import RegisterForm from '../RegisterForm';
-import GuestScreen from '../../GuestScreen';
+import GuestLayout from '../../Unknown/GuestLayout';
 
 const SignUpScreen: React.FC = () => {
   return (
-    <>
-      <GuestScreen>
-        <RegisterForm />
-      </GuestScreen>
-    </>
+    <GuestLayout>
+      <RegisterForm />
+    </GuestLayout>
   );
 };
 

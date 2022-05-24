@@ -1,25 +1,12 @@
 import React, { useState } from 'react';
 import { useAuth, useUser } from 'reactfire';
-import { makeStyles } from '@mui/styles';
 import { AppBar, Avatar, Button, Grid, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import clearFirestoreCache from '../../common/clearFirestoreCache';
-
-const useStyles = makeStyles({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 60,
-    padding: '0 30px',
-  },
-  menuIcon: {
-    width: 25,
-    height: 20,
-    marginRight: 31,
-  },
-});
+import getUserInitials from '../../common/getUserInitials';
+import useStyles from './styles';
 
 const Header: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -27,17 +14,7 @@ const Header: React.FC = () => {
   const auth = useAuth();
   const open = Boolean(anchorEl);
   const classes = useStyles();
-
-  const userInitials = () => {
-    if (user.displayName) {
-      const initials = user.displayName
-        .split(' ')
-        .map((name: string) => name[0])
-        .join('');
-      return initials;
-    }
-    return 'U';
-  };
+  const initials = getUserInitials(user);
 
   const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -59,7 +36,7 @@ const Header: React.FC = () => {
       </Grid>
       <Grid>
         <Button onClick={handleOpen}>
-          <Avatar>{userInitials()}</Avatar>
+          <Avatar>{initials}</Avatar>
         </Button>
         <Menu
           id="basic-menu"

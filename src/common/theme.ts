@@ -1,12 +1,22 @@
 import { createTheme } from '@mui/material';
 
+const colors = {
+  primary: '#F50057',
+  white: '#FFF',
+  backgroundInput: '#00000017',
+  snackbarInfoBackground: '#323232',
+  textPrimary: '#000000DE',
+  textSecondary: '#00000080',
+};
+
 const defaultTheme = createTheme({
   palette: {
     primary: {
-      main: '#F50057',
+      main: colors.primary,
     },
     text: {
-      secondary: '#00000080',
+      primary: colors.textPrimary,
+      secondary: colors.textSecondary,
     },
   },
   typography: {
@@ -31,19 +41,10 @@ const defaultTheme = createTheme({
     MuiButton: {
       variants: [
         {
-          props: { variant: 'contained', color: 'primary' },
-          style: {
-            maxWidth: 375,
-            height: 42,
-          },
-        },
-        {
           props: { variant: 'text', color: 'primary' },
           style: {
             fontSize: 13,
             fontWeight: 600,
-            width: 'fit-content',
-            padding: 0,
           },
         },
       ],
@@ -53,7 +54,7 @@ const defaultTheme = createTheme({
         {
           props: { variant: 'filled' },
           style: {
-            backgroundColor: '#00000017',
+            backgroundColor: colors.backgroundInput,
           },
         },
       ],
@@ -61,8 +62,8 @@ const defaultTheme = createTheme({
     MuiAlert: {
       styleOverrides: {
         filledInfo: {
-          backgroundColor: '#323232',
-          color: '#FFFFFF',
+          backgroundColor: colors.snackbarInfoBackground,
+          color: colors.white,
         },
       },
     },

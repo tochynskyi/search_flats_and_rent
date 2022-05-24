@@ -15,4 +15,3 @@ export type Flat = FirebaseId & {
   photoUrl: string;
   publishedAt: Timestamp;
 };
-

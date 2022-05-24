@@ -1,51 +1,16 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useAuth } from 'reactfire';
-import { useHistory } from 'react-router-dom';
-import {
-  Button,
-  Container,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import { Formik, Form } from 'formik';
 import { UIContext } from '../../Unknown/UIContext';
 import validationSchema from './validationSchema';
+import useStyles from './style';
+import PasswordField from '../PasswordField';
 
-const useStyles = makeStyles({
-  container: {
-    display: 'grid',
-    justifyContent: 'center',
-    rowGap: 50,
-  },
-  title: {
-    textAlign: 'center',
-    marginBottom: 80,
-  },
-  input: {
-    width: 375,
-    height: 55,
-  },
-});
-
-const Auth: React.FC = () => {
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showRepeatPassword, setShowRepeatPassword] = useState<boolean>(false);
+const Register: React.FC = () => {
   const { setAlert } = useContext(UIContext);
   const auth = useAuth();
   const classes = useStyles();
-  const history = useHistory();
-
-  const handleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-  const handleShowRepeatPassword = () => {
-    setShowRepeatPassword(!showRepeatPassword);
-  };
 
   const handleSignUp = React.useCallback(
     async (
@@ -60,37 +25,43 @@ const Auth: React.FC = () => {
           email,
           password,
         );
-        user
-          ?.updateProfile({
+        if (user) {
+          user.updateProfile({
             displayName: fullName,
-          })
-          .then(() => history.push(history.location.pathname));
-
-        setAlert({
-          show: true,
-          severity: 'info',
-          icon: false,
-          message: 'Welcome on board 🚀',
-        });
-      } catch (err: unknown) {
-        if (err instanceof Error) {
+          });
+          setAlert({
+            show: true,
+            severity: 'info',
+            icon: false,
+            message: 'Welcome on board 🚀',
+          });
+        }
+      } catch (error: unknown) {
+        if (error instanceof Error) {
           setAlert({
             show: true,
             severity: 'error',
-            message: err.message,
+            message: error.message,
+          });
+          setSubmitting(false);
+        } else {
+          setAlert({
+            show: true,
+            severity: 'error',
+            message: 'Something wrong!',
           });
           setSubmitting(false);
         }
       }
     },
-    [auth, setAlert, history],
+    [auth, setAlert],
   );
 
   return (
     <Container maxWidth="lg">
-      <Typography variant="h1" className={classes.title}>
-        Register
-      </Typography>
+      <Box className={classes.title}>
+        <Typography variant="h1">Register</Typography>
+      </Box>
       <Formik
         initialValues={{
           email: '',
@@ -104,9 +75,8 @@ const Auth: React.FC = () => {
         }}
       >
         {(formik) => (
-          <Form className={classes.container}>
+          <Form className={classes.formContainer}>
             <TextField
-              className={classes.input}
               fullWidth
               id="email"
               name="email"
@@ -118,7 +88,6 @@ const Auth: React.FC = () => {
               helperText={formik.touched.email && formik.errors.email}
             />
             <TextField
-              className={classes.input}
               fullWidth
               id="text"
               name="fullName"
@@ -129,53 +98,19 @@ const Auth: React.FC = () => {
               error={formik.touched.fullName && Boolean(formik.errors.fullName)}
               helperText={formik.touched.fullName && formik.errors.fullName}
             />
-            <TextField
-              className={classes.input}
-              fullWidth
+            <PasswordField
               id="password"
               name="password"
               label="Password"
-              type={showPassword ? 'text' : 'password'}
-              variant="filled"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleShowPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
               value={formik.values.password}
               onChange={formik.handleChange}
               error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
             />
-            <TextField
-              className={classes.input}
-              fullWidth
-              id="password"
+            <PasswordField
+              id="repeatPassword"
               name="repeatPassword"
               label="Repeat password"
-              type={showRepeatPassword ? 'text' : 'password'}
-              variant="filled"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleShowRepeatPassword}
-                      edge="end"
-                    >
-                      {showRepeatPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
               value={formik.values.repeatPassword}
               onChange={formik.handleChange}
               error={
@@ -187,6 +122,7 @@ const Auth: React.FC = () => {
               }
             />
             <Button
+              className={classes.button}
               color="primary"
               fullWidth
               type="submit"
@@ -202,4 +138,4 @@ const Auth: React.FC = () => {
   );
 };
 
-export default Auth;
+export default Register;

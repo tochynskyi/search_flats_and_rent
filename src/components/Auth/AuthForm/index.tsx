@@ -1,47 +1,16 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useAuth } from 'reactfire';
-import {
-  Button,
-  Container,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import { Formik, Form } from 'formik';
 import { UIContext } from '../../Unknown/UIContext';
 import validationSchema from './validationSchema';
-
-const useStyles = makeStyles({
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    rowGap: 50,
-  },
-  title: {
-    textAlign: 'center',
-    marginBottom: 90,
-  },
-  input: {
-    width: 375,
-    height: 55,
-  },
-});
+import PasswordField from '../PasswordField';
+import useStyles from './style';
 
 const AuthForm: React.FC = () => {
-  const [showPassword, setShowPassword] = useState<boolean>(false);
   const { setAlert } = useContext(UIContext);
   const auth = useAuth();
   const classes = useStyles();
-
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
 
   const handleSignIn = React.useCallback(
     async (
@@ -52,12 +21,19 @@ const AuthForm: React.FC = () => {
       try {
         setSubmitting(true);
         await auth.signInWithEmailAndPassword(email, password);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
+      } catch (error: unknown) {
+        if (error instanceof Error) {
           setAlert({
             show: true,
             severity: 'error',
-            message: err.message,
+            message: error.message,
+          });
+          setSubmitting(false);
+        } else {
+          setAlert({
+            show: true,
+            severity: 'error',
+            message: 'Something wrong!',
           });
           setSubmitting(false);
         }
@@ -68,9 +44,9 @@ const AuthForm: React.FC = () => {
 
   return (
     <Container maxWidth="lg">
-      <Typography variant="h1" className={classes.title}>
-        Login
-      </Typography>
+      <Box className={classes.title}>
+        <Typography variant="h1">Login</Typography>
+      </Box>
       <Formik
         initialValues={{
           email: '',
@@ -82,9 +58,8 @@ const AuthForm: React.FC = () => {
         }}
       >
         {(formik) => (
-          <Form className={classes.container}>
+          <Form className={classes.formContainer}>
             <TextField
-              className={classes.input}
               fullWidth
               id="email"
               name="email"
@@ -95,33 +70,17 @@ const AuthForm: React.FC = () => {
               error={formik.touched.email && Boolean(formik.errors.email)}
               helperText={formik.touched.email && formik.errors.email}
             />
-            <TextField
-              className={classes.input}
-              fullWidth
+            <PasswordField
               id="password"
               name="password"
               label="Password"
-              type={showPassword ? 'text' : 'password'}
-              variant="filled"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
               value={formik.values.password}
               onChange={formik.handleChange}
               error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
             />
             <Button
+              className={classes.button}
               color="primary"
               fullWidth
               type="submit"

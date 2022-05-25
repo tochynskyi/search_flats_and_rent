@@ -1,7 +1,8 @@
 {
-  "name": "voypost-project-553aa",
+  "name": "search_flat_and_rent",
   "version": "0.1.0",
   "private": true,
+  "author": "Tochynskyi Serhii",
   "dependencies": {
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",

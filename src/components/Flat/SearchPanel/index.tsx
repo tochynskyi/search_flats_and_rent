@@ -56,7 +56,7 @@ const SearchPanel: FC = () => {
       (async () => {
         try {
           const response: Response = await fetch(
-            `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${inputValue}&types=(cities)&key=AIzaSyAWQzaokWX9P8xGf81X0H4yLcTuHx6D0mw`,
+            `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${inputValue}&types=(cities)&key=YOUR_API_KEY`,
           );
 
           const { predictions } = await response.json();

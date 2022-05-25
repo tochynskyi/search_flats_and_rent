@@ -22,7 +22,7 @@ const Map: FC<MapProps> = ({ id, options, onMapLoad }) => {
     if (!window.google) {
       const s = document.createElement('script');
       s.type = 'text/javascript';
-      s.src = `https://maps.google.com/maps/api/js?key=AIzaSyAWQzaokWX9P8xGf81X0H4yLcTuHx6D0mw`;
+      s.src = `https://maps.google.com/maps/api/js?key=YOUR_API_KEY`;
       const x = document.getElementsByTagName('script')[0];
       x.before(s, x);
       s.addEventListener('load', () => {

@@ -40,21 +40,3 @@ yarn start
 
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Code quality standards
-
-Before committing your code, always run `yarn lint:fix` (inside the root and `functions` folders) to fix the code style. Ensure that your code has **0 errors** after running that command (warnings are acceptable, but not recommended too).
-
-## How to deploy my app to Firebase Hosting?
-
-```sh
-yarn build
-yarn deploy-hosting
-```
-
-## How to deploy my app functions?
-
-```sh
-cd functions
-yarn build
-yarn deploy
-```
